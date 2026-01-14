@@ -899,7 +899,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6042dd578efd5db46ac3cc9af8d614d3, type: 2}
+  - {fileID: 2100000, guid: 0db9e19f3b265e044a6a78542d35d095, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1337,6 +1337,11 @@ GameObject:
   - component: {fileID: 5711506200442241518}
   - component: {fileID: 1847448315406375828}
   - component: {fileID: 5085723273872339543}
+  - component: {fileID: 3569592475065707162}
+  - component: {fileID: 7553329902825791007}
+  - component: {fileID: 8785528904689218810}
+  - component: {fileID: 2916829313850546128}
+  - component: {fileID: 2999091576750410225}
   m_Layer: 0
   m_Name: Insurgent_01
   m_TagString: Untagged
@@ -1403,9 +1408,107 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3569592475065707162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902317781585582932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 683c8f2012224004ea599350950fccbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
+  prefabObject: {fileID: 1005321012000136381, guid: 9e9db35eb7562444f896e0a513faf50b, type: 3}
+  objectsNumberOnStart: 5
+--- !u!114 &7553329902825791007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902317781585582932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc04a0d1098dbb429acb463895d80b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponController
+  barrel: {fileID: 7958582715945277403}
+  currentAmmo: 5
+  maxAmmo: 10
+  infiniteAmmo: 1
+  bulletSpeed: 5
+  shootRate: 0.25
+  damage: 1
+  pointWeapon: {fileID: 0}
+--- !u!114 &8785528904689218810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902317781585582932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70be0b456faf56d4f99a709ffce73f8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  enemyData: {fileID: 11400000, guid: e8f1ee6a9bfc5c6469dbb609bebf91ab, type: 2}
+  patrolPointsContainer: {fileID: 0}
+--- !u!136 &2916829313850546128
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902317781585582932}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.46644378
+  m_Height: 1.9875783
+  m_Direction: 1
+  m_Center: {x: 0.033556223, y: 0.86943394, z: 0}
+--- !u!54 &2999091576750410225
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902317781585582932}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4927052190996770815
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,5 +3277,10 @@ PrefabInstance:
 --- !u!4 &5605055472192427645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1192919242120995086, guid: c73dfe6eccdbe2e478fc9fb0e6801be3, type: 3}
+  m_PrefabInstance: {fileID: 6721395926037575539}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7958582715945277403 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3690032679601922216, guid: c73dfe6eccdbe2e478fc9fb0e6801be3, type: 3}
   m_PrefabInstance: {fileID: 6721395926037575539}
   m_PrefabAsset: {fileID: 0}

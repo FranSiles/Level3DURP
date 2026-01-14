@@ -119,20 +119,37 @@ public class WeaponController : MonoBehaviour
     public bool CanShoot()
     {
         //Check shootRate
-        if ((Time.time - lastShootTime >= shootRate) && !granadeController.HasGrenadeInHand)
+        if (isPlayer)
         {
-            //Check Ammo
-            if (currentAmmo > 0 || infiniteAmmo)
+            if ((Time.time - lastShootTime >= shootRate) && !granadeController.HasGrenadeInHand)
             {
-                return true;
-            }
+                //Check Ammo
+                if (currentAmmo > 0 || infiniteAmmo)
+                {
+                    return true;
+                }
 
+            }
+        }
+        else
+        {
+            if ((Time.time - lastShootTime >= shootRate))
+            {
+                //Check Ammo
+                if (currentAmmo > 0 || infiniteAmmo)
+                {
+                    return true;
+                }
+
+            }
         }
 
-        return false;
+            return false;
     }
     private void ControlAim()
     {
+        if (isPlayer)
+        {        
         isSprint = playerMovement.IsSprinting;
         if (isSprint && isAim || granadeController.HasGrenadeInHand)
         {
@@ -140,6 +157,7 @@ public class WeaponController : MonoBehaviour
         }
         camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, isAim ? 40 : 60, Time.deltaTime * 10f);
         weaponTransform.localPosition = Vector3.Lerp(weaponTransform.localPosition, isAim ? AimPosition : originalPosition, Time.deltaTime * 10f);
+        }
     }
     public void AimShoot()
     {

@@ -28,7 +28,7 @@ public class BulletController : MonoBehaviour
     }
 
     //when the bullet collide with something (player, enemy , obstacle)
-    /*private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         //Deactive the bullet , available in ObjectPool
         gameObject.SetActive(false);
@@ -61,7 +61,7 @@ public class BulletController : MonoBehaviour
             Destroy(particles, 2f);
 
         }
-    }*/
+    }
 
 
 }
