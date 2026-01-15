@@ -290,6 +290,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    public void RechargeWeapon(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            weaponController.Recharge();
+        }
+    }
 
     #endregion
 }

@@ -5,7 +5,7 @@ public class Granade : MonoBehaviour
 {
     [SerializeField] private float delay = 5f;
     [SerializeField] private float explosionRadius = 5f;
-    [SerializeField] private float damage = 100f;
+    [SerializeField] private int damage = 2;
     [SerializeField] private GameObject explosionEffect;
 
     public void Activate()
@@ -27,18 +27,15 @@ public class Granade : MonoBehaviour
         }
         Debug.Log("Explote");
 
-        /*Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider hit in colliders)
         {
             if (hit.CompareTag("Enemy"))
             {
-                float distance = Vector3.Distance(transform.position, hit.transform.position);
-                float finalDamage = damage * (1 - distance / explosionRadius);
-                finalDamage = Mathf.Max(0, finalDamage);
-
-                hit.GetComponent<EnemyHealth>()?.TakeDamage(finalDamage);
+                Debug.Log("Daño realizado");
+                hit.GetComponent<EnemyController>().DamageEnemy(damage);
             }
-        }*/
+        }
 
         gameObject.SetActive(false);
     }

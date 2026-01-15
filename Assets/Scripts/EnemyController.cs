@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class EnemyController : MonoBehaviour
 
     private Renderer enemyRenderer;
 
+    //Animation
+    private Animator animator;
+
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
+    private Transform weaponTransform;
 
     private void Start()
     {
@@ -33,6 +40,8 @@ public class EnemyController : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         weaponController = GetComponent<WeaponController>();
         enemyRenderer = GetComponentInChildren<Renderer>();
+        animator = GetComponent<Animator>();
+        weaponTransform = GetComponentsInChildren<Transform>().FirstOrDefault(t => t.gameObject.layer == LayerMask.NameToLayer("Weapon"));
 
         //Initialize Enemy Data
         currentLife = enemyData.MaxLives;
@@ -40,6 +49,8 @@ public class EnemyController : MonoBehaviour
         agent.speed = enemyData.Speed;
         enemyRenderer.material = enemyData.EnemyMaterial;
         weaponController.ShootRate = enemyData.ShootRate;
+        originalPosition = weaponTransform.localPosition;
+        originalRotation = weaponTransform.localRotation;
 
 
         //Take all the children of patrolPointContainer and add them to the patrolPoints List
@@ -59,6 +70,9 @@ public class EnemyController : MonoBehaviour
         {
             if (!agent.pathPending && agent.remainingDistance <= 1f)
             {
+                animator.SetBool("IsShoot", false);
+                weaponTransform.localPosition=originalPosition;
+                weaponTransform.localRotation=originalRotation;
                 GoToNextPatrolPoint();
             }
         }
@@ -107,7 +121,12 @@ public class EnemyController : MonoBehaviour
             // Shoot if in range
             if (distToPlayer <= 7f)
             {
-                if (weaponController.CanShoot()) weaponController.Shoot();
+                if (weaponController.CanShoot())
+                {
+                    weaponTransform.localRotation = Quaternion.Euler(-81.196f, 152.099f, -75.841f);
+                    animator.SetBool("IsShoot", true);
+                    weaponController.Shoot();
+                }
             }
         }
         else

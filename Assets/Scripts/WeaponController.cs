@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
@@ -16,6 +18,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float shootRate;
     [SerializeField] private int damage;
 
+    [Header("Reload")]
+    [SerializeField] private bool canRecharge;
+    [SerializeField] private float durationReload = 1f;
+
     [Header("Croshair")]
     [SerializeField] private GameObject pointWeapon;
 
@@ -30,6 +36,7 @@ public class WeaponController : MonoBehaviour
     private bool isPlayer;
     private bool isAim;
     private bool isSprint;
+    private bool isRecharge;
 
     //position weapon
     private Vector3 originalPosition;
@@ -43,7 +50,7 @@ public class WeaponController : MonoBehaviour
     {
         //Check if Ia am a Player
         isPlayer = gameObject.CompareTag("Player");
-        weaponTransform = GetComponentsInChildren<Transform>().FirstOrDefault(t => t.gameObject.layer == LayerMask.NameToLayer("Weapon")); ;
+        weaponTransform = GetComponentsInChildren<Transform>().FirstOrDefault(t => t.gameObject.layer == LayerMask.NameToLayer("Weapon"));
         //get objectPool
         objectPool = GetComponent<ObjectPool>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -100,7 +107,14 @@ public class WeaponController : MonoBehaviour
                 targetPoint = ray.GetPoint(5); //Get a point at 5m
             }
 
-
+            if (!isAim)
+            {
+            weaponTransform.DOLocalMoveZ(originalPosition.z - 0.2f, 0.1f).SetEase(Ease.OutQuad).OnComplete(() =>
+            {
+               weaponTransform.DOLocalMoveZ(originalPosition.z, 0.1f).SetEase(Ease.InQuad);
+            });
+            }
+            
             bullet.GetComponent<Rigidbody>().linearVelocity = (targetPoint - barrel.position).normalized * bulletSpeed;
         }
         //If Enemy
@@ -121,7 +135,7 @@ public class WeaponController : MonoBehaviour
         //Check shootRate
         if (isPlayer)
         {
-            if ((Time.time - lastShootTime >= shootRate) && !granadeController.HasGrenadeInHand)
+            if ((Time.time - lastShootTime >= shootRate) && !granadeController.HasGrenadeInHand && !isRecharge)
             {
                 //Check Ammo
                 if (currentAmmo > 0 || infiniteAmmo)
@@ -174,5 +188,25 @@ public class WeaponController : MonoBehaviour
         pointWeapon.SetActive(true);
         
     }
-
+    public void Recharge()
+    {
+        if (canRecharge)
+        {
+            isRecharge = true;
+            weaponTransform.DOLocalMoveY(originalPosition.y - 0.3f, durationReload)
+            .SetEase(Ease.InOutQuad)
+            .OnComplete(() =>
+            {
+                DOVirtual.DelayedCall(0.5f, () =>
+                {
+                    weaponTransform.DOLocalMoveY(originalPosition.y, durationReload)
+                        .SetEase(Ease.InOutQuad).OnComplete(() =>
+                        {
+                            isRecharge=false;
+                        });
+                });
+            });
+            
+        }
+    }
 }
