@@ -104,7 +104,7 @@ public class WeaponController : MonoBehaviour
             }
             else
             {
-                targetPoint = ray.GetPoint(5); //Get a point at 5m
+                targetPoint = ray.GetPoint(30); //Get a point at 5m
             }
 
             if (!isAim)

@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8ea2cef28922f24eb171182cd86b05d, type: 3}
-  m_Name: NormalEnemies
+  m_Name: EnemiesNormal
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: Insrugent
-  description: A Normal Enemy In the map
-  speed: 6
+  enemyName: Normal enemy
+  description: A normal enemy in the map
+  speed: 3
   shootRate: 0.25
-  enemyMaterial: {fileID: 0}
-  maxLives: 5
+  maxLives: 10
   scorePoints: 50

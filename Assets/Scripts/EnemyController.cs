@@ -25,8 +25,6 @@ public class EnemyController : MonoBehaviour
     //Player Target
     private Transform playerTransform;
 
-    private Renderer enemyRenderer;
-
     //Animation
     private Animator animator;
 
@@ -39,7 +37,6 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         weaponController = GetComponent<WeaponController>();
-        enemyRenderer = GetComponentInChildren<Renderer>();
         animator = GetComponent<Animator>();
         weaponTransform = GetComponentsInChildren<Transform>().FirstOrDefault(t => t.gameObject.layer == LayerMask.NameToLayer("Weapon"));
 
@@ -47,7 +44,6 @@ public class EnemyController : MonoBehaviour
         currentLife = enemyData.MaxLives;
         enemyScorePoint = enemyData.ScorePoints;
         agent.speed = enemyData.Speed;
-        enemyRenderer.material = enemyData.EnemyMaterial;
         weaponController.ShootRate = enemyData.ShootRate;
         originalPosition = weaponTransform.localPosition;
         originalRotation = weaponTransform.localRotation;
