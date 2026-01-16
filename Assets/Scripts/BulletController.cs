@@ -13,8 +13,10 @@ public class BulletController : MonoBehaviour
 
 
     private int damage;
+    private GameObject shooter;
 
     public int Damage { get => damage; set => damage = value; }
+    public GameObject Shooter { get => shooter; set => shooter = value; }
 
     private void OnEnable()
     {
@@ -34,7 +36,7 @@ public class BulletController : MonoBehaviour
         gameObject.SetActive(false);
 
         //Enemy
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && shooter.CompareTag("Player"))
         {
             //Blood Particles Instantiate
             GameObject particles = Instantiate(damageParticle, transform.position, Quaternion.identity);
@@ -47,7 +49,7 @@ public class BulletController : MonoBehaviour
             other.GetComponent<EnemyController>().DamageEnemy(damage);
 
         }
-        else if (other.CompareTag("Player"))
+        else if (other.CompareTag("Player") && shooter.CompareTag("Enemy"))
         {
             //Reduce lives to Player
             other.GetComponent<PlayerContoller>().DamagePlayer(damage);

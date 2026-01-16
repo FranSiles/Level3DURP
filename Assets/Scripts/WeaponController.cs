@@ -1,8 +1,10 @@
 using DG.Tweening;
+using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponController : MonoBehaviour
 {
@@ -88,6 +90,8 @@ public class WeaponController : MonoBehaviour
         //assign damage
         bullet.GetComponent<BulletController>().Damage = damage;
 
+        bullet.GetComponent<BulletController>().Shooter = this.gameObject;
+
         //if is Player
         if (isPlayer)
         {
@@ -113,6 +117,10 @@ public class WeaponController : MonoBehaviour
             {
                weaponTransform.DOLocalMoveZ(originalPosition.z, 0.1f).SetEase(Ease.InQuad);
             });
+            }
+            if (Gamepad.current!=null)
+            {
+                StartCoroutine(VibrateGamepad());
             }
             
             bullet.GetComponent<Rigidbody>().linearVelocity = (targetPoint - barrel.position).normalized * bulletSpeed;
@@ -171,6 +179,16 @@ public class WeaponController : MonoBehaviour
         }
         camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, isAim ? 40 : 60, Time.deltaTime * 10f);
         weaponTransform.localPosition = Vector3.Lerp(weaponTransform.localPosition, isAim ? AimPosition : originalPosition, Time.deltaTime * 10f);
+        }
+    }
+    private IEnumerator VibrateGamepad()
+    {
+        if (Gamepad.current != null)
+        {
+            //vibrate gamepad during 0.25sec intensity medium
+            Gamepad.current.SetMotorSpeeds(0.5f, 0.5f);
+            yield return new WaitForSeconds(0.25f);
+            Gamepad.current.SetMotorSpeeds(0f, 0f); //stop vibration
         }
     }
     public void AimShoot()

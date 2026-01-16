@@ -4,27 +4,35 @@ using UnityEngine;
 
 public class GranadeController : MonoBehaviour
 {
+    [Header("Configuration Granade")]
     [SerializeField] private GameObject granadeInHand;
     [SerializeField] private GameObject grenadePrefab;
     [SerializeField] private float throwForce = 8f;
+    [SerializeField] private int maxGranade = 8;
+    [SerializeField] private int currentGranade = 3;
     private bool hasGrenadeInHand;
     private bool isPreparingThrow;
     Transform weapontransform;
 
     public bool HasGrenadeInHand { get => hasGrenadeInHand; set => hasGrenadeInHand = value; }
+    public int MaxGranade { get => maxGranade; set => maxGranade = value; }
+    public int CurrentGranade { get => currentGranade; set => currentGranade = value; }
 
     public void putGranade()
     {
-        if (!hasGrenadeInHand)
+        if (currentGranade>0)
         {
-            hasGrenadeInHand = true;
-            granadeInHand.SetActive(true);
-            weapontransform = GetComponentsInChildren<Transform>().FirstOrDefault(t => t.gameObject.layer == LayerMask.NameToLayer("Weapon"));
-            weapontransform.gameObject.SetActive(false);
-        }
-        else
-        {
-            isPreparingThrow = true;
+            if (!hasGrenadeInHand)
+            {
+                hasGrenadeInHand = true;
+                granadeInHand.SetActive(true);
+                weapontransform = GetComponentsInChildren<Transform>().FirstOrDefault(t => t.gameObject.layer == LayerMask.NameToLayer("Weapon"));
+                weapontransform.gameObject.SetActive(false);
+            }
+            else
+            {
+                isPreparingThrow = true;
+            }
         }
     }
     /*public void PositionThrow()
@@ -54,8 +62,9 @@ public class GranadeController : MonoBehaviour
 
         thrownGrenade.GetComponent<Granade>().Activate();
 
-        // ocultar la visual, NO destruir
         granadeInHand.SetActive(false);
+
+        currentGranade--;
 
         if (weapontransform != null)
             weapontransform.gameObject.SetActive(true);

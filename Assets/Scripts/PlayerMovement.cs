@@ -203,6 +203,14 @@ public class PlayerMovement : MonoBehaviour
         if (jetpackBar != null)
         {
             jetpackBar.value = currentJetpackFuel;
+            if (jetpackBar.value==maxJetpackFuel)
+            {
+                jetpackBar.gameObject.SetActive(false);
+            }
+            else
+            {
+                jetpackBar.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -263,6 +271,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (weaponController.CanShoot()) weaponController.Shoot();
     }
+
     public void Aim(InputAction.CallbackContext context)
     {
         if ((context.started || context.performed))
