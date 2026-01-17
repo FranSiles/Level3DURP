@@ -119,17 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &14326962 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1660639157885192662, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
-  m_PrefabInstance: {fileID: 852921618}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &68356384
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,8 +772,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
   barrel: {fileID: 1307450404}
   currentAmmo: 5
+  ammoReserve: 0
   maxAmmo: 10
   infiniteAmmo: 1
+  reloadSlider: {fileID: 0}
   bulletSpeed: 20
   shootRate: 0.25
   damage: 1
@@ -900,6 +891,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2057815334}
     - target: {fileID: 4970429892491446536, guid: 5ff760e701b294a4fad18ec6cdb0741d, type: 3}
+      propertyPath: maxAmmo
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970429892491446536, guid: 5ff760e701b294a4fad18ec6cdb0741d, type: 3}
+      propertyPath: ammoReserve
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970429892491446536, guid: 5ff760e701b294a4fad18ec6cdb0741d, type: 3}
       propertyPath: canRecharge
       value: 1
       objectReference: {fileID: 0}
@@ -907,6 +906,10 @@ PrefabInstance:
       propertyPath: pointWeapon
       value: 
       objectReference: {fileID: 849157880}
+    - target: {fileID: 4970429892491446536, guid: 5ff760e701b294a4fad18ec6cdb0741d, type: 3}
+      propertyPath: reloadSlider
+      value: 
+      objectReference: {fileID: 1983919798}
     - target: {fileID: 5058610423253894750, guid: 5ff760e701b294a4fad18ec6cdb0741d, type: 3}
       propertyPath: m_Height
       value: 1.9
@@ -1249,10 +1252,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 260000981206108650, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 400
-      objectReference: {fileID: 0}
     - target: {fileID: 645376602666722945, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1337,10 +1336,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3153697393907611021, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
-      propertyPath: m_RenderMode
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7601216727353686279, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1349,13 +1344,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 8454852424465000811, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
-      propertyPath: damageFlash
-      value: 
-      objectReference: {fileID: 14326962}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 645376602666722945, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1035824226}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
 --- !u!1 &883372022
@@ -1394,6 +1388,81 @@ Transform:
   - {fileID: 818856139}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1035824225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1035824226}
+  - component: {fileID: 1035824228}
+  - component: {fileID: 1035824227}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1035824226
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035824225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1947114068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1035824227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035824225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1035824228
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035824225}
+  m_CullTransparentMesh: 1
 --- !u!4 &1307450404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3690032679601922216, guid: c73dfe6eccdbe2e478fc9fb0e6801be3, type: 3}
@@ -6697,6 +6766,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!224 &1947114068 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 645376602666722945, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
+  m_PrefabInstance: {fileID: 852921618}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1983919798 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 25595407293079537, guid: 6523c7a686638144bb2a38fba3dcd264, type: 3}
+  m_PrefabInstance: {fileID: 852921618}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &2023092010
 GameObject:
   m_ObjectHideFlags: 0
@@ -6999,8 +7084,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
   barrel: {fileID: 505932316}
   currentAmmo: 5
+  ammoReserve: 0
   maxAmmo: 10
   infiniteAmmo: 1
+  reloadSlider: {fileID: 0}
   bulletSpeed: 20
   shootRate: 0.25
   damage: 1

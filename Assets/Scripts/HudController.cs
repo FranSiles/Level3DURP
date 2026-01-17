@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +8,44 @@ public class HudController : MonoBehaviour
     [SerializeField] private Image damageFlash;
     [SerializeField] private float damageTime;
 
+    [Header("Components of HUD")]
+    [SerializeField] private TextMeshProUGUI countammo;
+    [SerializeField] private TextMeshProUGUI countGranade;
+
     private Coroutine disappearCouroutine;
+    private GameObject player;
+    private WeaponController weaponController;
+    private GranadeController granadeController;
 
     public static HudController Instance;
 
     private void Awake()
     {
         Instance = this;
+        player = GameObject.FindGameObjectWithTag("Player");
+        weaponController=player.GetComponent<WeaponController>();
+        granadeController = player.GetComponent<GranadeController>();
+    }
+
+    private void Start()
+    {
+        if (!weaponController.InfiniteAmmo)
+        {
+            countammo.text = weaponController.CurrentAmmo.ToString("00") + "/" + weaponController.AmmoReserve.ToString("000");
+        }
+        else
+        {
+            countammo.text = "Infinite";
+        }
+        countGranade.text = granadeController.CurrentGranade.ToString("0");
+    }
+    private void Update()
+    {
+        if (!weaponController.InfiniteAmmo)
+        {
+            countammo.text = weaponController.CurrentAmmo.ToString("00") + "/" + weaponController.AmmoReserve.ToString("000");
+        }
+        countGranade.text = granadeController.CurrentGranade.ToString("0");
     }
 
     /// <summary>

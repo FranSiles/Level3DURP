@@ -25,9 +25,11 @@ public class MoveAmmo : MonoBehaviour
             {
                 Debug.Log("No Funciono :V");
             }
-            if (weaponController.CurrentAmmo < weaponController.MaxAmmo)
+            if (weaponController.AmmoReserve < weaponController.MaxAmmo)
             {
-                weaponController.CurrentAmmo += 30;
+                int bulletsToAdd = Mathf.Min(30, weaponController.MaxAmmo - weaponController.AmmoReserve);
+
+                weaponController.AmmoReserve += bulletsToAdd;
                 gameObject.SetActive(false);
             }
         }

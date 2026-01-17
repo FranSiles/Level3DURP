@@ -276,7 +276,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if ((context.started || context.performed))
         {
-            weaponController.AimShoot(); 
+            weaponController.AimShoot();
         }
         else if (context.canceled)
         {

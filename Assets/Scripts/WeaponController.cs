@@ -5,6 +5,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour
 {
@@ -12,8 +13,10 @@ public class WeaponController : MonoBehaviour
 
     [Header("Ammo")]
     [SerializeField] private int currentAmmo;
+    [SerializeField] private int ammoReserve;
     [SerializeField] private int maxAmmo;
     [SerializeField] private bool infiniteAmmo;
+    [SerializeField] private Slider reloadSlider;
 
     [Header("Performance")]
     [SerializeField] private float bulletSpeed;
@@ -30,10 +33,13 @@ public class WeaponController : MonoBehaviour
     public float ShootRate { get => shootRate; set => shootRate = value; }
     public int MaxAmmo { get => maxAmmo; set => maxAmmo = value; }
     public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
+    public int AmmoReserve { get => ammoReserve; set => ammoReserve = value; }
+    public bool InfiniteAmmo { get => infiniteAmmo; set => infiniteAmmo = value; }
 
     private ObjectPool objectPool;
     private Transform weaponTransform;
     private float lastShootTime;
+    private int charger;
 
     private bool isPlayer;
     private bool isAim;
@@ -64,6 +70,10 @@ public class WeaponController : MonoBehaviour
     private void Start()
     {
         granadeController = GetComponent<GranadeController>();
+        if (isPlayer)
+        {
+            charger = currentAmmo;
+        }
     }
     private void Update()
     {
@@ -208,18 +218,35 @@ public class WeaponController : MonoBehaviour
     }
     public void Recharge()
     {
-        if (canRecharge)
+        if (ammoReserve <= 0) return;
+        if (isRecharge) return;
+        if (infiniteAmmo) return;
+
+        if (canRecharge && currentAmmo<charger)
         {
             isRecharge = true;
+            reloadSlider.gameObject.SetActive(true);
+            reloadSlider.value = 0f;
             weaponTransform.DOLocalMoveY(originalPosition.y - 0.3f, durationReload)
             .SetEase(Ease.InOutQuad)
             .OnComplete(() =>
             {
+                float totalTime = 0.5f + durationReload;
+                DOVirtual.Float(0f, 1f, totalTime, value =>
+                {
+                    reloadSlider.value = value;
+                });
                 DOVirtual.DelayedCall(0.5f, () =>
                 {
                     weaponTransform.DOLocalMoveY(originalPosition.y, durationReload)
                         .SetEase(Ease.InOutQuad).OnComplete(() =>
                         {
+                            int bulletsNeeded = charger - currentAmmo;
+                            int bulletsToReload = Mathf.Min(bulletsNeeded, ammoReserve);
+                            currentAmmo += bulletsToReload;
+                            ammoReserve -= bulletsToReload;
+                            reloadSlider.gameObject.SetActive(false);
+                            Debug.Log("Mi municion seria:"+currentAmmo+"/"+ammoReserve);
                             isRecharge=false;
                         });
                 });
