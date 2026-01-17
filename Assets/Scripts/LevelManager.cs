@@ -65,6 +65,8 @@ public class LevelManager : MonoBehaviour
     private void ActivateLosePanel()
     {
         PauseGameObjects();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         panelLose.SetActive(true);
     }
     public void ActivatePausePanel()
