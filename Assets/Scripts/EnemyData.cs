@@ -8,12 +8,10 @@ public class EnemyData : ScriptableObject
     [SerializeField] private float speed;
     [SerializeField] private float shootRate;
     [SerializeField] private int maxLives;
-    [SerializeField] private int scorePoints;
 
 
     public float Speed { get => speed; }
     public float ShootRate { get => shootRate; }
     public int MaxLives { get => maxLives; }
-    public int ScorePoints { get => scorePoints; }
 
 }

@@ -5,6 +5,8 @@ public class PlayerContoller : MonoBehaviour
     private int currentLives;
     [SerializeField] private int maxLives;
 
+    public int CurrentLives { get => currentLives; set => currentLives = value; }
+
     private void Awake()
     {
         currentLives = maxLives;

@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isSprinting;
     private bool isMoving;
     private bool isJumping;
+    private bool activatePanelPause;
+    private bool isPaused;
 
     //Animator
     private Animator animator;
@@ -95,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        
         MovePlayer();
         LookAround();
         HandleStamina();
@@ -218,17 +221,20 @@ public class PlayerMovement : MonoBehaviour
     #region INPUT SYSTEM
     public void Move(InputAction.CallbackContext context)
     {
+        
         moveInput = context.ReadValue<Vector2>();
         isMoving = moveInput != Vector2.zero;
     }
 
     public void Look(InputAction.CallbackContext context)
     {
+        
         lookInput = context.ReadValue<Vector2>();
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
+        
         if (context.started)
         {
             if (characterController.isGrounded)
@@ -256,6 +262,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Sprint(InputAction.CallbackContext context)
     {
+        
         if (!isJetpacking)
         {
             isSprinting = context.started || context.performed;
@@ -269,11 +276,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
+        
         if (weaponController.CanShoot()) weaponController.Shoot();
     }
 
     public void Aim(InputAction.CallbackContext context)
     {
+        
         if ((context.started || context.performed))
         {
             weaponController.AimShoot();
@@ -286,6 +295,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void TrowItem(InputAction.CallbackContext context)
     {
+        
         if (context.started)
         {
             granadeController.putGranade();
@@ -301,9 +311,27 @@ public class PlayerMovement : MonoBehaviour
     }
     public void RechargeWeapon(InputAction.CallbackContext context)
     {
+        
         if (context.started)
         {
             weaponController.Recharge();
+        }
+    }
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            if (!activatePanelPause)
+            {
+                activatePanelPause = true;   
+                LevelManager.Instance.ActivatePausePanel();
+            }
+            else
+            {
+                activatePanelPause = false;
+                LevelManager.Instance.DesactivatePauseLevel();
+            }
+            
         }
     }
 

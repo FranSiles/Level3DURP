@@ -11,11 +11,13 @@ public class HudController : MonoBehaviour
     [Header("Components of HUD")]
     [SerializeField] private TextMeshProUGUI countammo;
     [SerializeField] private TextMeshProUGUI countGranade;
+    [SerializeField] private TextMeshProUGUI countLife;
 
     private Coroutine disappearCouroutine;
     private GameObject player;
     private WeaponController weaponController;
     private GranadeController granadeController;
+    private PlayerContoller playerContoller;
 
     public static HudController Instance;
 
@@ -25,6 +27,7 @@ public class HudController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         weaponController=player.GetComponent<WeaponController>();
         granadeController = player.GetComponent<GranadeController>();
+        playerContoller=player.GetComponent<PlayerContoller>();
     }
 
     private void Start()
@@ -38,6 +41,8 @@ public class HudController : MonoBehaviour
             countammo.text = "Infinite";
         }
         countGranade.text = granadeController.CurrentGranade.ToString("0");
+        countLife.text = playerContoller.CurrentLives.ToString("00");
+
     }
     private void Update()
     {
@@ -46,6 +51,7 @@ public class HudController : MonoBehaviour
             countammo.text = weaponController.CurrentAmmo.ToString("00") + "/" + weaponController.AmmoReserve.ToString("000");
         }
         countGranade.text = granadeController.CurrentGranade.ToString("0");
+        countLife.text = playerContoller.CurrentLives.ToString("00");
     }
 
     /// <summary>

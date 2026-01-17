@@ -8,8 +8,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("Enemy Data")]
     [SerializeField] EnemyData enemyData;
-    private int currentLife;    
-    private int enemyScorePoint;
+    private int currentLife;
 
     [Header("Patrol")]
     [SerializeField] private GameObject patrolPointsContainer;
@@ -32,6 +31,7 @@ public class EnemyController : MonoBehaviour
     private Quaternion originalRotation;
     private Transform weaponTransform;
 
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -42,7 +42,6 @@ public class EnemyController : MonoBehaviour
 
         //Initialize Enemy Data
         currentLife = enemyData.MaxLives;
-        enemyScorePoint = enemyData.ScorePoints;
         agent.speed = enemyData.Speed;
         weaponController.ShootRate = enemyData.ShootRate;
         originalPosition = weaponTransform.localPosition;
