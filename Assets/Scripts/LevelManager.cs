@@ -90,6 +90,8 @@ public class LevelManager : MonoBehaviour
     public void Continue()
     {
         ResumeGameObjects();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         pausePanel.SetActive(false);
     }
     public void Configuration()

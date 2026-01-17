@@ -16,5 +16,4 @@ MonoBehaviour:
   description: A normal enemy in the map
   speed: 3
   shootRate: 0.25
-  maxLives: 10
-  scorePoints: 50
+  maxLives: 5

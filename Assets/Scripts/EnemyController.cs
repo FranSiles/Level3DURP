@@ -110,7 +110,7 @@ public class EnemyController : MonoBehaviour
             transform.LookAt(playerTransform.position);
 
             // stop if too close
-            if (distToPlayer < 5f)
+            if (distToPlayer < 3f)
                 agent.isStopped = true;
 
             // Shoot if in range
