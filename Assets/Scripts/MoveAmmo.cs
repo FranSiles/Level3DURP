@@ -27,6 +27,7 @@ public class MoveAmmo : MonoBehaviour
             }
             if (weaponController.AmmoReserve < weaponController.MaxAmmo)
             {
+                AudioManager.Instance.PlayTakePlay();
                 int bulletsToAdd = Mathf.Min(30, weaponController.MaxAmmo - weaponController.AmmoReserve);
 
                 weaponController.AmmoReserve += bulletsToAdd;

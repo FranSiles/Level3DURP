@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject panelLose;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject configurationPanel;
+    [SerializeField] private GameObject controlsPanel;
 
     [Header("Score")]
     [SerializeField] private int scorePerLife = 250;
@@ -36,11 +37,16 @@ public class LevelManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         Debug.Log("Enemigos en el mapa: "+ enemiesOnGame);
     }
-    private void Update()
+    private void Start()
     {
-        if (player.GetComponent<PlayerContoller>().CurrentLives<=0)
+        if (int.Parse(SceneManager.GetActiveScene().name.Substring(5)) == 1)
         {
-            ActivateLosePanel();
+            PauseGameObjects();
+            controlsPanel.SetActive(true);
+        }
+        else
+        {
+            AudioManager.Instance.StopBackgroundMenuPlay();
         }
     }
     public void ActivateWinPanel()
@@ -59,19 +65,26 @@ public class LevelManager : MonoBehaviour
         totalScore=scoreLife+scoreEnemies;
         pointswin.text = "Score: " + totalScore.ToString("0000");
         enemies.text="Enemies:"+enemyKills.ToString("00")+"/"+enemiesOnGame.ToString("00");
-        
-
+        AudioManager.Instance.PlayBackgroundMenuPlay();
+        AudioManager.Instance.StopJetpackSound();
+        AudioManager.Instance.StopStepsSound();
+        AudioManager.Instance.StopSprintSound();
     }
-    private void ActivateLosePanel()
+    public void ActivateLosePanel()
     {
         PauseGameObjects();
+        AudioManager.Instance.PlayBackgroundMenuPlay();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         panelLose.SetActive(true);
+        AudioManager.Instance.StopJetpackSound();
+        AudioManager.Instance.StopStepsSound();
+        AudioManager.Instance.StopSprintSound();
     }
     public void ActivatePausePanel()
     {
         pausePanel.SetActive(true);
+        AudioManager.Instance.PlayBackgroundMenuPlay();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         PauseGameObjects();
@@ -84,15 +97,25 @@ public class LevelManager : MonoBehaviour
     public void Restart()
     {
         ResumeGameObjects();
+        AudioManager.Instance.StopBackgroundMenuPlay();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         pausePanel.SetActive(false);
     }
     public void Continue()
     {
         ResumeGameObjects();
+        AudioManager.Instance.StopBackgroundMenuPlay();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pausePanel.SetActive(false);
+    }
+    public void ContinueControls()
+    {
+        ResumeGameObjects();
+        AudioManager.Instance.StopBackgroundMenuPlay();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        controlsPanel.SetActive(false);
     }
     public void Configuration()
     {
@@ -107,6 +130,7 @@ public class LevelManager : MonoBehaviour
     public void nextLevel()
     {
         CheckMaxLevel();
+        AudioManager.Instance.StopBackgroundMenuPlay();
         //total number of levels
         int currentLevel = int.Parse(SceneManager.GetActiveScene().name.Substring(5));
         CheckRecordPoints(currentLevel);
@@ -158,6 +182,9 @@ public class LevelManager : MonoBehaviour
         int currentLevel = int.Parse(SceneManager.GetActiveScene().name.Substring(5));
         CheckMaxLevel();
         CheckRecordPoints(currentLevel);
+        AudioManager.Instance.StopJetpackSound();
+        AudioManager.Instance.StopStepsSound();
+        AudioManager.Instance.StopSprintSound();
         SceneManager.LoadScene("MainMenu");
     }
 

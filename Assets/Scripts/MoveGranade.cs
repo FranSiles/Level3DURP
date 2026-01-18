@@ -18,6 +18,7 @@ public class MoveGranade : MonoBehaviour
             granadeController = other.GetComponent<GranadeController>();
             if (granadeController.CurrentGranade < granadeController.MaxGranade)
             {
+                AudioManager.Instance.PlayTakePlay();
                 granadeController.CurrentGranade += 1;
                 gameObject.SetActive(false);
             }

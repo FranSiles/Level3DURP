@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc738743283fdf649b9e3b82d9972e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Granade
-  delay: 5
+  delay: 2.5
   explosionRadius: 5
   damage: 2
   explosionEffect: {fileID: 1685874166552172, guid: 2dc5347a44240ea4597cafb2d1d7c160, type: 3}

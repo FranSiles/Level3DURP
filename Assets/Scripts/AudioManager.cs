@@ -27,10 +27,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
     public void PlayStepsSound()
     {
-        steps.Play();
+        if (!steps.isPlaying)
+            steps.Play();
+    }
+
+    public void PlaySprintSound()
+    {
+        if (!sprint.isPlaying)
+            sprint.Play();
+    }
+
+    public void PlayJetpackSound()
+    {
+        if (!jetpack.isPlaying)
+            jetpack.Play();
     }
 
     public void PlayRechargeSound()
@@ -40,14 +52,6 @@ public class AudioManager : MonoBehaviour
     public void PlayShootSound()
     {
         shoot.Play();
-    }
-    public void PlaySprintSound()
-    {
-        sprint.Play();
-    }
-    public void PlayJetpackSoundP()
-    {
-        jetpack.Play();
     }
     public void PlayBackgroundMenuPlay()
     {
@@ -60,6 +64,23 @@ public class AudioManager : MonoBehaviour
     public void StopBackgroundMenuPlay()
     {
         backgroundMenu.Stop();
+    }
+    public void StopStepsSound()
+    {
+        if (steps.isPlaying)
+            steps.Stop();
+    }
+
+    public void StopSprintSound()
+    {
+        if (sprint.isPlaying)
+            sprint.Stop();
+    }
+
+    public void StopJetpackSound()
+    {
+        if (jetpack.isPlaying)
+            jetpack.Stop();
     }
 
 }

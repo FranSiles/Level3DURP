@@ -71,6 +71,7 @@ public class EnemyController : MonoBehaviour
                 GoToNextPatrolPoint();
             }
         }
+        AudioManager.Instance.PlayStepsSound();
     }
 
     /// <summary>

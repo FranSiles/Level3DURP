@@ -25,8 +25,7 @@ public class PlayerContoller : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            //TODO HUDController Active Panel
-            Debug.Log("GAME OVER!!!");
+            LevelManager.Instance.ActivateLosePanel();
         }
     }
 

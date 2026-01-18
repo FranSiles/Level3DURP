@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -59,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isMoving;
     private bool isJumping;
     private bool activatePanelPause;
-    private bool isPaused;
 
     //Animator
     private Animator animator;
@@ -75,7 +75,14 @@ public class PlayerMovement : MonoBehaviour
         granadeController = GetComponent<GranadeController>();
 
         //Hide mouse coursor
-        Cursor.lockState = CursorLockMode.Locked;
+        if(int.Parse(SceneManager.GetActiveScene().name.Substring(5)) == 1)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
 
         animator = GetComponent<Animator>();
         //Initialize StaminaBar to Max
@@ -102,6 +109,32 @@ public class PlayerMovement : MonoBehaviour
         LookAround();
         HandleStamina();
         HandleJetpackUI();
+        if (isJetpacking)
+        {
+            AudioManager.Instance.PlayJetpackSound();
+        }
+        else
+        {
+            AudioManager.Instance.StopJetpackSound();
+        }
+
+        if (isMoving && isSprinting && !isJetpacking)
+        {
+                AudioManager.Instance.PlaySprintSound();
+        }
+        else
+        {
+            AudioManager.Instance.StopSprintSound();
+        }
+
+        if (isMoving && !isSprinting && !isJetpacking)
+        {
+                AudioManager.Instance.PlayStepsSound();
+        }
+        else
+        {
+            AudioManager.Instance.StopStepsSound();
+        }
     }
 
     private void MovePlayer()
@@ -131,7 +164,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (characterController.isGrounded)
         {
-            // Recarga solo en suelo (opcional)
             currentJetpackFuel += jetpackRechargeRate * Time.deltaTime;
             currentJetpackFuel = Mathf.Min(currentJetpackFuel, maxJetpackFuel);
         }
@@ -150,7 +182,6 @@ public class PlayerMovement : MonoBehaviour
         move = transform.TransformDirection(move);
         characterController.Move(move * Time.deltaTime);
 
-        // Animación
         float targetAnimSpeed = moveInput.magnitude > 0.1f
             ? (isSprinting && !isJetpacking ? 6f : 2f)
             : 0f;

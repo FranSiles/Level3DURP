@@ -132,7 +132,6 @@ public class WeaponController : MonoBehaviour
             {
                 StartCoroutine(VibrateGamepad());
             }
-            
             bullet.GetComponent<Rigidbody>().linearVelocity = (targetPoint - barrel.position).normalized * bulletSpeed;
         }
         //If Enemy
@@ -142,6 +141,7 @@ public class WeaponController : MonoBehaviour
             //Give velocity to Bullet
             bullet.GetComponent<Rigidbody>().linearVelocity = barrel.forward * bulletSpeed;
         }
+        AudioManager.Instance.PlayShootSound();
     }
 
     /// <summary>
@@ -224,6 +224,7 @@ public class WeaponController : MonoBehaviour
 
         if (canRecharge && currentAmmo<charger)
         {
+            AudioManager.Instance.PlayRechargeSound();
             isRecharge = true;
             reloadSlider.gameObject.SetActive(true);
             reloadSlider.value = 0f;
