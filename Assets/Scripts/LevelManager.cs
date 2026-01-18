@@ -125,7 +125,7 @@ public class LevelManager : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
-            var ai = enemy.GetComponent<EnemyController>();// Cambia según tu script de enemigos
+            var ai = enemy.GetComponent<EnemyController>();
             var animation = enemy.GetComponent<Animator>();
             var navmesh=enemy.GetComponent<NavMeshAgent>();
             if (ai != null)
@@ -136,11 +136,10 @@ public class LevelManager : MonoBehaviour
             }  
         }
 
-        // Congelar físicas activas (opcional)
         Rigidbody[] rigidbodies = FindObjectsOfType<Rigidbody>();
         foreach (Rigidbody rb in rigidbodies)
         {
-            rb.isKinematic = true; // congela objetos físicos
+            rb.isKinematic = true;
         }
     }
     private void ResumeGameObjects()
@@ -176,11 +175,10 @@ public class LevelManager : MonoBehaviour
                 
         }
 
-        // Reactivar físicas
         Rigidbody[] rigidbodies = FindObjectsOfType<Rigidbody>();
         foreach (Rigidbody rb in rigidbodies)
         {
-            rb.isKinematic = false; // reactiva objetos físicos
+            rb.isKinematic = false;
         }
     }
 
