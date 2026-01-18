@@ -14,8 +14,6 @@ Recover The City es un juego 3D en el que el jugador debe recuperar una ciudad q
 - Lenguaje(s) de programación:C# 
 - Plataforma objetivo: PC/Web  
 
-## Instalación
+## Enlace de juego
 
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/tu-usuario/recover-the-city.git
+Si quieres probarlo:[Pagina de descarga del juego](https://unity.com/)
