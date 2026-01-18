@@ -104,6 +104,85 @@ public class LevelManager : MonoBehaviour
         configurationPanel.SetActive(false);
         pausePanel.SetActive(true);
     }
+    public void nextLevel()
+    {
+        CheckMaxLevel();
+        //total number of levels
+        int currentLevel = int.Parse(SceneManager.GetActiveScene().name.Substring(5));
+        CheckRecordPoints(currentLevel);
+        switch (currentLevel)
+        {
+            case 1:
+                SceneManager.LoadScene("Level2");
+                break;
+            case 2:
+                SceneManager.LoadScene("Level3");
+                break;
+        }
+    }
+
+    private void CheckRecordPoints(int level)
+    {
+        int highScore = 0;
+        switch (level)
+        {
+            case 1:
+                highScore = PlayerPrefs.GetInt(GameConstants.HIGHSCORELevel1_KEY, 0000);//Put value 0 if not exist a value
+                break;
+            case 2:
+                highScore = PlayerPrefs.GetInt(GameConstants.HIGHSCORELevel2_KEY, 0000);//Put value 0 if not exist a value
+                break;
+            case 3:
+                highScore = PlayerPrefs.GetInt(GameConstants.HIGHSCORELevel3_KEY, 0000);//Put value 0 if not exist a value
+                break;
+        }
+        if (totalScore > highScore)
+        {
+            switch (level)
+            {
+                case 1:
+                    PlayerPrefs.SetInt(GameConstants.HIGHSCORELevel1_KEY, totalScore);
+                    break;
+                case 2:
+                    PlayerPrefs.SetInt(GameConstants.HIGHSCORELevel2_KEY, totalScore);
+                    break;
+                case 3:
+                    PlayerPrefs.SetInt(GameConstants.HIGHSCORELevel3_KEY, totalScore);
+                    break;
+            }
+
+        }
+    }
+    public void MainMenu()
+    {
+        int currentLevel = int.Parse(SceneManager.GetActiveScene().name.Substring(5));
+        CheckMaxLevel();
+        CheckRecordPoints(currentLevel);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    /// <summary>
+    /// Check Max Level
+    /// </summary>
+    void CheckMaxLevel()
+    {
+        //ask for the current level
+        int currentLevel = int.Parse(SceneManager.GetActiveScene().name.Substring(5));
+        //Save the next Level for the first time
+        if (!PlayerPrefs.HasKey(GameConstants.MAXLEVEL_KEY))
+        {
+            PlayerPrefs.SetInt(GameConstants.MAXLEVEL_KEY, currentLevel + 1);
+        }
+        else
+        {
+            if (PlayerPrefs.GetInt(GameConstants.MAXLEVEL_KEY) < currentLevel + 1)
+            {
+                PlayerPrefs.SetInt(GameConstants.MAXLEVEL_KEY, currentLevel + 1);
+            }
+
+        }
+    }
+
     private void PauseGameObjects()
     {
         // Pausar jugador
