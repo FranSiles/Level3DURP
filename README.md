@@ -16,4 +16,4 @@ Recover The City es un juego 3D en el que el jugador debe recuperar una ciudad q
 
 ## Enlace de juego
 
-Si quieres probarlo:[Pagina de descarga del juego]([https://unity.com/](https://asalto88.itch.io/recover-the-city))
+Si quieres probarlo:[Pagina de descarga del juego](https://asalto88.itch.io/recover-the-city)
